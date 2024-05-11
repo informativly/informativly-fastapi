@@ -1,21 +1,15 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# syntax=docker/dockerfile:1
 
-# Set the working directory in the container
-WORKDIR /app
+FROM python:3.11
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+WORKDIR /code
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt .
 
-# Define environment variable
-ENV NAME World
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+COPY . .
 
-# Run app.py when the container launches
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "myapp:app", "--bind", "0.0.0.0:80"]
+EXPOSE 3100
 
+CMD ["gunicorn", "main:app"]
