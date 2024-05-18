@@ -8,3 +8,8 @@ app = FastAPI()
 @app.get("/")
 async def read_root():
     return {"Hello": "World champions"}
+
+# Define a route for the server status endpoint
+@app.get("/status")
+async def get_status():
+    return {"status": "Server is running"}
