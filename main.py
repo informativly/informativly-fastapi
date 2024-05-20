@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
 # Import the service
-from .logic_service import get_random_number
+from logic_service import get_random_number
 
 # Create an instance of the FastAPI class
 app = FastAPI()
