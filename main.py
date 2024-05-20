@@ -8,7 +8,7 @@ app = FastAPI()
 # Define a route for the root endpoint
 @app.get("/")
 async def read_root():
-    return {"Hello": "World champions"}
+    return {"Foo": "Bar"}
 
 # Define a route for the server status endpoint
 @app.get("/status")
