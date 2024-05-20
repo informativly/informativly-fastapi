@@ -12,7 +12,7 @@ app = FastAPI()
 @app.get("/")
 async def read_root():
     random_number = get_random_number()
-    return {"Foo": "Bar", "number": random_number}
+    return {"foo": "bar", "number": random_number}
 
 # Define a route for the server status endpoint
 @app.get("/status")
