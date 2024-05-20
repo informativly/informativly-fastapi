@@ -2,13 +2,17 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
+# Import the service
+from .logic_service import get_random_number
+
 # Create an instance of the FastAPI class
 app = FastAPI()
 
 # Define a route for the root endpoint
 @app.get("/")
 async def read_root():
-    return {"Foo": "Bar"}
+    random_number = get_random_number()
+    return {"Foo": "Bar", "number": random_number}
 
 # Define a route for the server status endpoint
 @app.get("/status")
