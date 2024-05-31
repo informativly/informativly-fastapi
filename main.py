@@ -20,3 +20,8 @@ async def read_root(number: int = Query(None), test: str = Query(None)):
 @app.get('/status')
 async def get_status():
     return {'status': 'Server is running'}
+
+# Define a route for the hello endpoint
+@app.get('/hello')
+async def say_hello():
+    return {'message': 'Hello, World!'}
