@@ -1,6 +1,4 @@
-# Import FastAPI
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Query, HTTPException
 
 # Import the service
 from logic_service import get_random_number
@@ -9,18 +7,16 @@ from logic_service import get_random_number
 app = FastAPI()
 
 # Define a route for the root endpoint
-@app.get("/")
-async def read_root():
-    random_number = get_random_number()
-    return {"foo": "bar", "number": random_number}
+@app.get('/')
+async def read_root(number: int = Query(None), test: str = Query(None)):
+    if number is None:
+        number = get_random_number()
+    expected_test = 'even' if number % 2 == 0 else 'odd'
+    if test is not None and test != expected_test:
+        raise HTTPException(status_code=400, detail=f"Invalid 'test' value. Expected '{expected_test}' but got '{test}'")
+    return {'foo': 'bar', 'number': number, 'test': expected_test}
 
 # Define a route for the server status endpoint
-@app.get("/status")
+@app.get('/status')
 async def get_status():
-    return {"status": "Server is running"}
-
-# Define a new route for the hello world HTML page
-@app.get("/hello", response_class=HTMLResponse)
-async def get_hello_world():
-    html_content = "<html><body><h1>Hello World</h1></body></html>"
-    return HTMLResponse(content=html_content, status_code=200)
+    return {'status': 'Server is running'}
