@@ -30,3 +30,8 @@ async def say_hello():
 @app.get('/foo')
 async def foo_endpoint():
     return {'message': 'This is a message from the foo endpoint'}
+
+# Define a route for the bar endpoint
+@app.get('/bar')
+async def bar_endpoint():
+    return {'message': 'This is a message from the bar endpoint'}
