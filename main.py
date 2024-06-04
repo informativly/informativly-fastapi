@@ -35,4 +35,4 @@ async def foo_endpoint():
 # Define a route for the bar endpoint
 @app.get('/bar')
 async def bar_endpoint():
-    return {'message': 'foo is my enemy'}
+    return {'message': 'foo is not my friend'}
