@@ -25,3 +25,8 @@ async def get_status():
 @app.get('/hello')
 async def say_hello():
     return {'message': 'Hello, World!'}
+
+# Define a route for the foo endpoint
+@app.get('/foo')
+async def foo_endpoint():
+    return {'message': 'This is a message from the foo endpoint'}
