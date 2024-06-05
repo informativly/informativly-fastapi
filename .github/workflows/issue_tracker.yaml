@@ -1,0 +1,19 @@
+name: Issue and Label Notification
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Developer AI Endpoint
+        if: github.event.action == 'opened' || (github.event.action == 'labeled' && github.event.label.name == 'New')
+        run: |
+          curl -X POST https://aasee-ai.azurewebsites.net/api/v1/code/solve-issue \
+          -H "Content-Type: application/json" \
+          -d '{
+                "repo": "${{ github.repository }}",
+                "issue_number": "${{ github.event.issue.number }}"
+              }'
