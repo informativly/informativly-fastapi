@@ -8,12 +8,23 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install jq
+        run: sudo apt-get install jq -y
       - name: Notify Developer AI Endpoint
+        id: notify
         if: github.event.action == 'opened' || (github.event.action == 'labeled' && github.event.label.name == 'New')
         run: |
-          curl -X POST https://aasee-ai.azurewebsites.net/api/v1/code/solve-issue \
+          RESPONSE=$(curl -s -o response.txt -w "%{http_code}" -X POST https://mykcickass.ai/api/v1/code/solve-issue \
           -H "Content-Type: application/json" \
           -d '{
-                "repo": "${{ github.repository }}",
-                "issue_number": "${{ github.event.issue.number }}"
-              }'
+              "repo": "${{ github.repository }}",
+              "issue_number": "${{ github.event.issue.number }}"
+              }')
+          echo $RESPONSE
+          cat response.txt
+          RESPONSE_BODY=$(cat response.txt | jq -r)
+          echo $RESPONSE_BODY
