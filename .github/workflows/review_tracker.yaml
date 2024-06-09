@@ -1,0 +1,21 @@
+name: PR Created Notification
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Reviewer AI Endpoint
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        run: |
+          issue_number=$(curl -s https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} | jq '.body' | grep -oE '#[0-9]+' | grep -oE '[0-9]+')
+          response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST https://aasee-ai.azurewebsites.net/api/v1/review \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "repo": "${{ github.repository }}",
+                  "issue_number": "$issue_number"
+                }')
+          echo "Response Code: $response_code"
