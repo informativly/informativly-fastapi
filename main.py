@@ -1,27 +1,11 @@
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI
 
-# Import the service
-from logic_service import get_random_number
-
-# Create an instance of the FastAPI class
 app = FastAPI()
 
-# Define a route for the root endpoint
-@app.get('/')
-async def read_root(number: int = Query(None), test: str = Query(None)):
-    if number is None:
-        number = get_random_number()
-    expected_test = 'even' if number % 2 == 0 else 'odd'
-    if test is not None and test != expected_test:
-        raise HTTPException(status_code=400, detail=f"Invalid 'test' value. Expected '{expected_test}' but got '{test}'")
-    return {'foo': 'bar', 'number': number, 'test': expected_test}
+@app.get("/foo")
+def foo_endpoint():
+    return {"message": "This is a message from the foo endpoint"}
 
-# Define a route for the server status endpoint
-@app.get('/status')
-async def get_status():
-    return {'status': 'Server is running'}
-
-# Define a route for the hello endpoint
-@app.get('/hello')
-async def say_hello():
-    return {'message': 'Hello, World!'}
+@app.get("/bar")
+def bar_endpoint():
+    return {"message": "This is a message from the bar endpoint"}
