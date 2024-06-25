@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Query, HTTPException
+import random
 
 # Import the service
 from logic_service import get_random_number
