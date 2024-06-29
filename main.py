@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Query, HTTPException
 import random
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+import os
 
 # Import the service
 from logic_service import get_random_number
@@ -19,13 +21,8 @@ app.add_middleware(
 
 # Define a route for the root endpoint
 @app.get('/')
-async def read_root(number: int = Query(None), test: str = Query(None)):
-    if number is None:
-        number = get_random_number()
-    expected_test = 'even' if number % 2 == 0 else 'odd'
-    if test is not None and test != expected_test:
-        raise HTTPException(status_code=400, detail=f"Invalid 'test' value. Expected '{expected_test}' but got '{test}'")
-    return {'foo': 'bar', 'number': number, 'test': expected_test}
+async def read_root():
+    return FileResponse('index.html')
 
 # Define a route for the server status endpoint
 @app.get('/status')
