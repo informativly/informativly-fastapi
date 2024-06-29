@@ -28,7 +28,7 @@ async def say_hello():
     return {'message': 'Hello, World!'}
 
 # Define a route for the joke endpoint
-@app.get('/jokes')
+@app.get('/joke')
 async def get_joke():
     jokes = [
         ("Why don't scientists trust atoms? Because they make up everything!", 5),
