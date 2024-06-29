@@ -22,7 +22,7 @@ app.add_middleware(
 # Define a route for the root endpoint
 @app.get('/')
 async def read_root():
-    return FileResponse('index.html')
+    return FileResponse('static/index.html')
 
 # Define a route for the server status endpoint
 @app.get('/status')
