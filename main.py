@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Query, HTTPException
+import random
 
 # Import the service
 from logic_service import get_random_number
@@ -25,3 +26,14 @@ async def get_status():
 @app.get('/hello')
 async def say_hello():
     return {'message': 'Hello, World!'}
+
+# Define a route for the jokes endpoint
+@app.get('/jokes')
+async def get_jokes():
+    jokes = [
+        ("Why don't scientists trust atoms? Because they make up everything!", 10),
+        ("Why did the scarecrow win an award? Because he was outstanding in his field!", 30),
+        ("Why don't skeletons fight each other? They don't have the guts.", 60)
+    ]
+    joke = random.choices([j[0] for j in jokes], weights=[j[1] for j in jokes], k=1)[0]
+    return {'joke': joke}
