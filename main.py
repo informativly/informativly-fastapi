@@ -3,6 +3,7 @@ import random
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import os
+from fastapi.staticfiles import StaticFiles
 
 # Import the service
 from logic_service import get_random_number
@@ -18,6 +19,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount the static files directory
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Define a route for the root endpoint
 @app.get('/')
