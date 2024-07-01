@@ -20,8 +20,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Ensure the static directory exists
+if not os.path.exists('static'):
+    os.makedirs('static')
+if not os.path.exists('static/js'):
+    os.makedirs('static/js')
+
 # Mount the static files directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/js", StaticFiles(directory="static/js"), name="js")
 
 # Define a route for the root endpoint
 @app.get('/')
@@ -69,5 +76,8 @@ async def get_random_joke():
         "Why did the bicycle fall over? Because it was two-tired!",
         "Why don't some couples go to the gym? Because some relationships don't work out."
     ]
-    joke = random.choice(jokes)
-    return {'joke': joke}
+    joke1 = random.choice(jokes)
+    joke2 = random.choice(jokes)
+    while joke1 == joke2:
+        joke2 = random.choice(jokes)
+    return {'jokes': [joke1, joke2]}
