@@ -5,6 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     jokeButton.addEventListener('click', async function() {
         const response = await fetch('/random_joke');
         const data = await response.json();
-        jokeDisplay.textContent = data.joke;
+        jokeDisplay.textContent = `${data.jokes[0]}\n${data.jokes[1]}`;
     });
 });
