@@ -28,7 +28,6 @@ if not os.path.exists('static/js'):
 
 # Mount the static files directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/js", StaticFiles(directory="static/js"), name="js")
 
 # Define a route for the root endpoint
 @app.get('/')
