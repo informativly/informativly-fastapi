@@ -44,8 +44,18 @@ async def get_status():
 async def say_hello():
     return {'message': 'Hello, World!'}
 
-# Define a route for the jokes endpoint
+# Define a route for the jokes page
 @app.get('/jokes')
+async def jokes_page():
+    return FileResponse('static/jokes.html')
+
+# Define a route for the riddles page
+@app.get('/riddles')
+async def riddles_page():
+    return FileResponse('static/riddles.html')
+
+# Define a route for the jokes endpoint
+@app.get('/api/jokes')
 async def get_jokes():
     jokes = [
         "Why don't scientists trust atoms? Because they make up everything!",
@@ -61,7 +71,7 @@ async def get_jokes():
     ]
     return {'jokes': jokes}
 
-@app.get('/random_joke')
+@app.get('/api/random_joke')
 async def get_random_joke():
     jokes = [
         "Why don't scientists trust atoms? Because they make up everything!",
@@ -80,3 +90,19 @@ async def get_random_joke():
     while joke1 == joke2:
         joke2 = random.choice(jokes)
     return {'jokes': [joke1, joke2]}
+
+@app.get('/api/riddles')
+async def get_riddles():
+    riddles = [
+        {"question": "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", "answer": "An echo"},
+        {"question": "You measure my life in hours and I serve you by expiring. I'm quick when I'm thin and slow when I'm fat. The wind is my enemy. What am I?", "answer": "A candle"},
+        {"question": "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", "answer": "A map"},
+        {"question": "What has keys, but no locks; space, but no room; you can enter, but not go in?", "answer": "A keyboard"},
+        {"question": "I am taken from a mine and shut up in a wooden case, from which I am never released, and yet I am used by everyone. What am I?", "answer": "A pencil lead"},
+        {"question": "I have branches, but no fruit, trunk or leaves. What am I?", "answer": "A bank"},
+        {"question": "What is always in front of you but can't be seen?", "answer": "The future"},
+        {"question": "What can travel around the world while staying in a corner?", "answer": "A stamp"},
+        {"question": "I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?", "answer": "Fire"},
+        {"question": "The more you take, the more you leave behind. What am I?", "answer": "Footsteps"}
+    ]
+    return {'riddles': riddles}
